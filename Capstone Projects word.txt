@@ -1,0 +1,161 @@
+Capstone Projects
+
+
+Data Analytics and AI
+
+
+
+
+School of Agentic AI
+
+Capstone Projects
+
+Data Analytics and AI
+
+
+Order-to-Cash (O2C):
+
+
+The Order-to-Cash (O2C) cycle is the foundation of operational efficiency, guiding the entire journey from order placement to payment collection. Yet in many organizations, it remains slow, fragmented, and prone to errors—draining time, cash flow, and customer confidence.
+
+Agentic AI represents a decisive shift beyond conventional automation. By leveraging autonomous, intelligent agents that grasp context, make informed decisions, and act in real time—powered by natural language processing, predictive analytics, and continuous learning—it redefines how O2C operates.
+
+This process spans multiple interconnected stages: customer order management, credit checks, order fulfillment, invoicing, accounts receivable, collections, customer service, and dispute resolution. Agentic AI enhances each of these areas by deploying specialized agents that anticipate problems, automate routine tasks, and adapt dynamically. The result is a streamlined, error-resistant, and faster end-to-end O2C workflow that strengthens cash flow, builds trust, and fuels scalable growth.
+
+
+Transportation Orchestration process
+
+
+Transport orchestration automates the selection of carriers, booking of shipments, and execution of dispatches, integrating with TMS and ERP systems. This ensures cost-effective, timely, and compliant transportation of goods.
+
+High-level Process Overview
+
+1. Carrier Selection and Booking
+
+o Inputs: Order and shipment details
+
+o AI Actions: Rate and select carriers, book slots, generate shipping docs
+
+o Outputs: Booked shipments, shipping documentation
+
+2. Dispatch Execution
+
+o AI Actions: Tender loads, confirm dispatch, update ERP/TMS
+
+o Outputs: Dispatch confirmations, audit logs
+
+
+Orchestration Agent
+
+· Transport Orchestration Agent
+
+
+Task Agents
+
+· Carrier Selector Agent
+
+· Booking Agent
+
+· Load Tender Agent
+
+· Dispatch Confirmer Agent
+
+· Audit Logger Agent
+
+
+
+Detailed workflow and Technical Requirements:
+
+
+# Agent Name Detailed Description Inputs (Includes Upstream Agent Outputs) Data Sources Required Outputs Key Validations & Processing Integrations Required
+
+1 Carrier Selector Agent Evaluates available carriers for each shipment using TMS, ERP, and carrier APIs. Rates carriers based on cost, service level, and capacity. Selects optimal carrier(s) for each shipment. Maintains carrier selection logs for audit. Shipment/order details (from ERP/TMS), carrier availability/capacity data TMS carrier database, carrier APIs, ERP shipment tables Selected carrier(s) with rating details, selection log Carrier eligibility, rate comparison, service level TMS APIs, carrier APIs, ERP shipment data
+
+2 Booking Agent Books shipment slots with selected carriers. Confirms booking, receives booking reference/confirmation, and updates TMS/ERP. Handles booking errors, slot conflicts, and retries. Logs all booking activities for traceability. Selected carrier(s) and shipment details (from Carrier Selector Agent) Carrier booking APIs, TMS booking module, ERP shipment tables Booking confirmation (reference number, slot details), booking log Booking confirmation, slot availability, error/retry handling Carrier APIs, TMS booking APIs, ERP integration
+
+3 Load Tender Agent Tenders loads to carriers electronically via TMS/carrier APIs. Monitors tender Booking confirmation (from Booking Agent) TMS, carrier APIs, ERP Tender acceptance/rejection status, tender log Tender transmission, acceptance TMS APIs, carrier APIs, ERP shipment data
+
+# Agent Name Detailed Description Inputs (Includes Upstream Agent Outputs) Data Sources Required Outputs Key Validations & Processing Integrations Required acceptance, handles rejections, and escalates exceptions. Updates TMS/ERP with tender status. Logs all tender actions for audit and performance tracking. shipment tables confirmation, rejection handling
+
+4 Dispatch Confirmer Agent Confirms actual dispatch of shipments with carriers. Updates ERP/TMS with dispatch status, carrier tracking info, and estimated delivery. Handles dispatch delays or exceptions. Logs all dispatch events for audit and compliance. Tender acceptance status and shipment details (from Load Tender Agent) Carrier dispatch APIs, TMS, ERP shipment tables Dispatch confirmation, carrier tracking info, dispatch log Dispatch confirmation, tracking info validation, delay/exception handling Carrier APIs, TMS APIs, ERP shipment data
+
+5 Audit Logger Agent Collects and stores logs of all transport orchestration events across agents. Tracks timestamps, user/system actions, carrier selections, bookings, tenders, dispatches, and exceptions. Produces immutable, queryable audit trails. Supports export. Logs/events/outputs from all agents Centralized log storage, monitoring platforms (ELK, Splunk, Azure) Searchable, exportable audit trail data Completeness, tamper resistance, traceability Logging system API, cloud storage
+
+
+
+Transportation Orchestration – Happy Path Flow
+
+The happy path represents the ideal scenario where an order moves seamlessly through the workflow without exceptions. The Orchestration Agent triggers and sequences the agents, ensuring smooth data flow across steps:
+
+Step 1: Carrier Selector Agent
+
+· Input: Shipment/order details from ERP/TMS, carrier availability and capacity data.
+
+· Process: Evaluates carriers using TMS, ERP, and carrier APIs. Rates carriers on cost, service level, compliance, and capacity.
+
+· Output: Selected carrier(s) with rating details and a carrier selection log.
+
+· Next Agent: Passes selected carrier(s) and shipment details to Booking Agent.
+
+
+Step 2: Booking Agent
+
+· Input: Selected carrier(s) and shipment details from Carrier Selector Agent.
+
+· Process: Books shipment slots via carrier APIs, confirms booking, retrieves reference numbers, and updates TMS/ERP.
+
+· Output: Booking confirmation (reference number, slot details) and booking log.
+
+· Next Agent: Sends booked shipment details to Load Tender Agent.
+
+
+Step 3: Load Tender Agent
+
+· Input: Shipping documents and booking confirmation from Booking Agent.
+
+· Process: Tenders loads electronically via TMS/carrier APIs, monitors acceptance, handles rejections, and updates TMS/ERP.
+
+· Output: Tender acceptance/rejection status and tender log.
+
+· Next Agent: Passes tender acceptance status and shipment details to Dispatch Confirmer Agent.
+
+
+Step 4: Dispatch Confirmer Agent
+
+· Input: Tender acceptance status and shipment details from Load Tender Agent.
+
+· Process: Confirms actual dispatch with carriers, updates ERP/TMS with dispatch status, tracking info, and estimated delivery.
+
+· Output: Dispatch confirmation, carrier tracking info, and dispatch log.
+
+· Next Agent: Sends all logs and events to Audit Logger Agent.
+
+
+Step 5: Audit Logger Agent
+
+· Input: Logs/events/outputs from all previous agents.
+
+· Process: Collects and stores logs, ensures immutability and traceability.
+
+· Output: Searchable, exportable audit trail data.
+
+
+Exception Flow
+
+· Trigger: Any agent detects an issue (e.g., carrier unavailable, booking failure, document compliance error, tender rejection, dispatch delay).
+
+· Routing: Orchestrator routes exception to retry logic or escalation mechanism.
+
+· Resolution:
+
+o Carrier Selector Agent → Re-select alternate carrier.
+
+o Booking Agent → Retry booking or escalate slot conflict.
+
+o Load Tender Agent → Re-tender to another carrier.
+
+o Dispatch Confirmer Agent → Update ETA or escalate delay.
+
+· Reprocessing: Resume workflow from failed step after correction.
+
+· Audit: All exception events, retries, and resolutions logged by Audit Logger Agent.
