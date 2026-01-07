@@ -1,0 +1,51 @@
+
+param(
+    [string]$StorageEndpoint = "ngaai.file.core.windows.net",
+    [string]$ShareName       = "nga-ai",
+    [string]$DriveLetter     = "Z",
+    [string]$UserName        = "localhost\ngaai",
+    [string]$PasswordPlain   = "EcalKX3+IxhULzBG2V34e21deG8K233I7ImoL90WgDtptgUtOrXxDuTpEfKjh7uWKyOrOcI8yPf++AStPfkM2Q=="
+)
+
+$ErrorActionPreference = "Stop"
+
+try {
+    Write-Host ("Testing SMB (port 445) connectivity to {0}..." -f $StorageEndpoint)
+    $connectTestResult = Test-NetConnection -ComputerName $StorageEndpoint -Port 445
+
+    if (-not $connectTestResult.TcpTestSucceeded) {
+        throw "Unable to reach $StorageEndpoint via port 445. Check org/ISP firewall or use Azure P2S/S2S VPN or ExpressRoute."
+    }
+
+    $rootPath  = "\\$StorageEndpoint\$ShareName"
+    $driveName = $DriveLetter.TrimEnd(':')
+
+    # If already mapped, skip or refresh
+    $existing = Get-PSDrive -Name $driveName -ErrorAction SilentlyContinue
+    if ($existing -and $existing.Root -eq $rootPath) {
+        Write-Host ("Drive {0}: already mapped to {1}. Skipping remount." -f $DriveLetter, $rootPath)
+        return
+    }
+
+    # If a different mapping exists on the same letter, remove it
+    if ($existing) {
+        Write-Host ("Drive letter {0}: is in use. Removing existing mapping..." -f $DriveLetter)
+        cmd.exe /C "net use $DriveLetter`: /delete /y" | Out-Null
+        Remove-PSDrive -Name $driveName -ErrorAction SilentlyContinue
+    }
+
+    Write-Host "Saving credential to Windows Credential Manager for persistence..."
+    # Persist credential for SMB (escape double-quotes just in case)
+    $escapedEndpoint = $StorageEndpoint.Replace('"','\"')
+    $escapedUser     = $UserName.Replace('"','\"')
+    $escapedPass     = $PasswordPlain.Replace('"','\"')
+    cmd.exe /C "cmdkey /add:`"$escapedEndpoint`" /user:`"$escapedUser`" /pass:`"$escapedPass`"" | Out-Null
+
+    Write-Host ("Mounting {0} to {1}: ..." -f $rootPath, $DriveLetter)
+    New-PSDrive -Name $driveName -PSProvider FileSystem -Root $rootPath -Persist
+
+    Write-Host ("Mounted {0}: to {1} successfully." -f $DriveLetter, $rootPath)
+}
+catch {
+    Write-Error $_.Exception.Message
+}
