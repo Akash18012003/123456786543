@@ -1,0 +1,42 @@
+{
+    "MANDT": {
+        "value": "100",
+        "description": "Client Number"
+    },
+    "VBELN": {
+        "value": "450987",
+        "description": "Sales Document Number"
+    },
+    "VSTEL": {
+        "value": "MUM",
+        "description": "Shipping Point"
+    },
+    "WERKS": {
+        "value": "IN01",
+        "description": "Plant"
+    },
+    "SPART": {
+        "value": "01",
+        "description": "Division"
+    },
+    "KUNNR": {
+        "value": "CUST-10045",
+        "description": "Customer Number"
+    },
+    "MATNR": {
+        "value": "MAT-DELUXE-01",
+        "description": "Material Number"
+    },
+    "LFART": {
+        "value": "ZEXP",
+        "description": "Delivery Type"
+    },
+    "ERDAT": {
+        "value": "20251127",
+        "description": "Creation Date"
+    },
+    "ERNAM": {
+        "value": "SYSTEM",
+        "description": "Created By"
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "VBELN": {
+        "value": "450987",
+        "description": "Sales Document Number"
+    },
+    "shipment_id": {
+        "value": "SHP-20251127-001",
+        "description": "Internal Shipment Identifier"
+    },
+    "selected_carrier": {
+        "value": "CAR-DELTA",
+        "description": "Chosen Carrier"
+    },
+    "carrier_rating": {
+        "value": 4.7,
+        "description": "Carrier Performance Rating"
+    },
+    "cost_estimate": {
+        "value": 1200.5,
+        "description": "Estimated Freight Cost"
+    },
+    "service_level": {
+        "value": "Express",
+        "description": "Service Level Selected"
+    },
+    "validation_status": {
+        "value": "Passed",
+        "description": "Validation Check Status"
+    },
+    "timestamp": {
+        "value": "2025-11-27T11:51:03.283181",
+        "description": "Processing Timestamp"
+    }
+}

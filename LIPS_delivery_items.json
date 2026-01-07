@@ -1,0 +1,26 @@
+{
+    "VBELN": {
+        "value": "450987",
+        "description": "Sales Document Number"
+    },
+    "POSNR": {
+        "value": "000010",
+        "description": "Item Number"
+    },
+    "MATNR": {
+        "value": "MAT-DELUXE-01",
+        "description": "Material Number"
+    },
+    "LFIMG": {
+        "value": 150.0,
+        "description": "Delivery Quantity"
+    },
+    "WERKS": {
+        "value": "IN01",
+        "description": "Plant"
+    },
+    "LGNUM": {
+        "value": "0001",
+        "description": "Warehouse Number"
+    }
+}

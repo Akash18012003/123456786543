@@ -1,0 +1,32 @@
+{
+    "CARRIERS": [
+        {
+            "CARRIER_ID": {
+                "value": "CAR-DELTA",
+                "description": "Carrier Identifier"
+            },
+            "SERVICE_LEVEL": {
+                "value": "EXPRESS",
+                "description": "Service Level"
+            },
+            "RATE": {
+                "value": 1200.5,
+                "description": "Freight Rate"
+            }
+        },
+        {
+            "CARRIER_ID": {
+                "value": "CAR-OMEGA",
+                "description": "Carrier Identifier"
+            },
+            "SERVICE_LEVEL": {
+                "value": "STANDARD",
+                "description": "Service Level"
+            },
+            "RATE": {
+                "value": 950.0,
+                "description": "Freight Rate"
+            }
+        }
+    ]
+}
