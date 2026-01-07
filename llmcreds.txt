@@ -1,0 +1,7 @@
+"openai.api_type": "azure",  
+"openai.api_base": "https://schoolofagenticaitraining.openai.azure.com/",  
+"openai.api_version": "2025-01-01-preview",  
+"openai.api_key": "CjD1Yjq4drPVDyMTQAaY7W1VXP81jBuFcqpg5kHS6SdFzTsHaDhuJQQJ99BKACHYHv6XJ3w3AAABACOGQH5v",  
+"openai.engine_name": "gpt-4o"
+
+
